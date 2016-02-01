@@ -1,0 +1,36 @@
+server {
+	listen	80;
+	listen	[::]:80;
+	server_name .councilofcode.org;
+	return 301 https://councilofcode.org$request_uri;
+}
+
+server {
+	listen	443;
+	listen	[::]:443;
+	server_name	*.councilofcode.org;
+
+	ssl_certificate /etc/ssl/certs/councilofcode.crt;
+	ssl_certificate_key /etc/ssl/private/councilofcode.key;
+
+	return 301 https://councilofcode.org$request_uri;
+
+}
+server {
+	listen       443 ssl;
+	listen	     [::]:443 ssl;
+	server_name  councilofcode.org;
+
+	ssl_certificate /etc/ssl/certs/councilofcode.crt;
+	ssl_certificate_key /etc/ssl/private/councilofcode.key;
+
+	access_log	/var/log/nginx/councilofcode_access.log;
+	error_log	/var/log/nginx/councilofcode_error.log;
+
+	location / {
+		include		uwsgi_params;
+		uwsgi_pass	unix:/run/uwsgi/mooddiary.sock;
+
+	}
+
+}

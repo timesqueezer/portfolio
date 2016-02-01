@@ -1,0 +1,7 @@
+[uwsgi]
+virtualenv = {{ app_path}}/env
+chdir = {{ app_path }}
+module = run
+callable = app
+plugins = python
+processes = 2

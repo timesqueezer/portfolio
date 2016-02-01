@@ -1,0 +1,22 @@
+---
+
+- name: install system packages
+  pacman: name=git,python-virtualenv,python-pip state=present
+
+- name: create empty directory to clone into
+  file: owner=matz group=http mode=775 path={{ app_path }} state=directory
+
+- name: create nginx log directory
+  file: owner=http group=log mode=750 state=directory path=/var/log/nginx/portfolio
+
+- name: copy vhost
+  copy: src=portfolio dest=/etc/nginx/servers-available/portfolio owner=root group=root directory_mode=755
+
+- name: symlink vhosts
+  file: state=link path=/etc/nginx/servers-enabled/portfolio src=/etc/nginx/servers-available/portfolio
+
+- name: configure portfolio uwsgi
+  template: src=uwsgi_config.ini.j2 dest=/etc/uwsgi/vassals/portfolio.ini owner=matz group=http mode=640
+
+- name: nginx restart
+  service: name=nginx state=restarted
