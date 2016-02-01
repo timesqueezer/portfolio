@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Matz Radloff - Portfolio</title>
+        <base href="{{ request.url_root }}">
+
+        {% assets "css" %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+        {% endassets %}
+
+        {% assets "js" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+    </head>
+    <body>
+        <div class="header">
+        </div>
+        <div class="container root">
+            <div class="panel panel-default">
+                <div class="panel-heading" data-spy="affix" data-offset-top="60">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a href="#">Blog</a></li>
+                        <li role="presentation"><a href="#">CV</a></li>
+                        <li role="presentation"><a href="#">Contact / Imprint</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <img class="img-responsive pull-right" style="margin-top: 17pt" src="{{ url_for('static', filename='img/logo150.png') }}">
+                            <h1>Behind the Scenes of MyMUN</h1>
+                            <p>Hi, I'm Matz, a full-stack developer and the server admin at MyMUN.</p>
+                            <p>My team and I believe in open-source, sharing information and transparency and so it happens that we thought to give you some insight into architectural decisions, the workflow and security measures we use to ensure a stable and continuous functioning of our service.  So without further ado, let's start with our first behind-the-scenes tour of the MyMUN project.</p>
+
+                            <h2>Open-Source</h2>
+                            <p>Free and especially open-source software was one of the key ingredients that enabled us to build a system with the level of complexity required for a conference management system and social network that MyMUN is. We greatly benefitted from the possibility to customize projects to our demands by forking or working upstream. Besides many little libraries our main software-stack for the web-application itself consists of:</p>
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="media-left media-middle">
+                                        <a href="//flask.pocoo.org/">
+                                            <img class="media-object" src="{{ url_for('static', filename='img/flask.png') }}" alt="Flask">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="list-group-item-heading">Flask</h3>
+                                        <p class="list-group-item-text">A very lightweight but extendable micro-framework that served us very well as the backend core.</p>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left media-middle">
+                                        <a href="//angularjs.org/">
+                                            <img class="media-object" src="{{ url_for('static', filename='img/angular.png') }}" alt="Flask">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="list-group-item-heading">AngularJS</h3>
+                                        <p class="list-group-item-text">AngularJS makes the creation of single-page web-applications quite easy, allthough it's "just another JS framework". Well, it actually kind of works.</p>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left media-middle">
+                                        <a href="//postgresql.org/">
+                                            <img class="media-object" src="{{ url_for('static', filename='img/postgresql.png') }}" alt="Flask">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="list-group-item-heading">Postgresql</h3>
+                                        <p class="list-group-item-text">Just the best.</p>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left media-middle">
+                                        <a href="//getbootstrap.com/">
+                                            <img class="media-object" src="{{ url_for('static', filename='img/bootstrap.png') }}" alt="Flask">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h3 class="list-group-item-heading" style="color: #563d7c">Bootstrap <small>(highly customized of course)</small></h3>
+                                        <p class="list-group-item-text">You might have heard about it.</p>
+                                    </div>
+                                </li>
+
+                            </ul>
+
+                            <h2>Architecture</h2>
+                            <p>To create a complete system we had to connect these and many other components to make them work seamlessly together . In a very simplified way the main components are a Flask server exposing a REST API und an angularjs client that uses AJAX heavily.
+                               Up to this point our whole system seems pretty straightforward but there is more to it than meets the eye. From a developers' perspective there are mainly two things besides coding the application itself: Continuous deployment and development, Data-Security
+                            </p>
+
+                            <h3>Continous deployment and development:</h3>
+                            <p>The obvious first part of this is <strike>a version control system</strike> git. In our system the production and development branches are directly connected to a CI service that automatically runs tests, deployes a cloned environment to make sure absolutely everything works under production conditions and finally deployes the live system. The most interesting part is the deployment process, which we use ansible for. <a href="//www.ansible.com/">Ansible</a> is a lightweight yet very powerful tool every sysadmin and even developer can benefit from. If you haven't heard about it yet, it's basically a linux automation tool for nearly everything ranging from setting up a project on a remote mashine to deploying a big server cluster with many individual components. This leads us to the next topic:</p>
+
+                            <h3>Data-Security:</h3>
+                            <p>As an administrator having the responsibility for user's data to stay secure as well as redundant, one has to be prepared for the worst case scenario possible. Let's pretend for a moment the following happens:</p>
+
+                            <p>A plane crashes into the data-center the MyMUN system runs in and it destroys both the RAID 1 array in the server itself and the separate backup-storage. Fortunately we've got several off-site backups so the data is not lost. But the application is obviously down. What a shame. Then our ansible-powered setup and deployment system comes into play. After uploading the backup, a single shell command would set up a new server and deploy our whole infrastructure within minutes. That's the power of ansible. So even in this kind of scenario we are prepared to get your conferences back to you in the shortest time possible.</p>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</script>

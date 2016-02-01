@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio",
+  "license": "mit",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "latest",
+    "fontawesome": "latest",
+    "jquery": "latest"
+  },
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ]
+}
