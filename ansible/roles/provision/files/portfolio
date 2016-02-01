@@ -29,7 +29,7 @@ server {
 
 	location / {
 		include		uwsgi_params;
-		uwsgi_pass	unix:/run/uwsgi/mooddiary.sock;
+		uwsgi_pass	unix:/run/uwsgi/portfolio.sock;
 
 	}
 
