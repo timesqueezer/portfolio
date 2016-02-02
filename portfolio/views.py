@@ -1,3 +1,4 @@
+import os
 from flask import render_template, Blueprint, send_file
 
 
@@ -14,7 +15,12 @@ def send_favicon():
     return send_file('static/favicon.ico')
 
 
+@main.route('/upload/<path:name>')
+def upload(name=None)
+    return send_file(os.path.join('/upload/'+name))
+
 @main.route('/')
 @main.route('/<path:path>')
 def index(path=None):
     return render_template('index.html')
+
