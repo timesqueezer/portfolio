@@ -16,7 +16,7 @@ def send_favicon():
 
 
 @main.route('/upload/<path:name>')
-def upload(name=None)
+def upload(name=None):
     return send_file(os.path.join('/upload/'+name))
 
 @main.route('/')
