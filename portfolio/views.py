@@ -17,6 +17,7 @@ def send_favicon():
 
 @main.route('/upload/<path:name>')
 def upload(name=None):
+    print(os.getcwd())
     if os.path.exists(os.path.join('upload/'+name)):
         return send_file(os.path.join('upload/'+name))
     else:
