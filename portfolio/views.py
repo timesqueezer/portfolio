@@ -17,7 +17,10 @@ def send_favicon():
 
 @main.route('/upload/<path:name>')
 def upload(name=None):
-    return send_file(os.path.join('upload/'+name))
+    if os.path.exists(os.path.join('upload/'+name)):
+        return send_file(os.path.join('upload/'+name))
+    else:
+        return "File not found  :(", 400
 
 @main.route('/')
 @main.route('/<path:path>')
